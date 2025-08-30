@@ -38,13 +38,10 @@ public class UserService {
         if (optionalUser.isPresent()) {
             throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
         }
-
-        User user = UserMapper.signUpToUser(userDto);;
+        User user = UserMapper.signUpToUser(userDto);
         user.setRole(Role.USER);
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.getPassword())));
-
         User savedUser = userRepository.save(user);
-
         return UserMapper.toUserDto(savedUser);
     }
 
